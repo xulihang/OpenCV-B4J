@@ -38,10 +38,11 @@ Sub AppStart (Form1 As Form, Args() As String)
 	thresh.Initialize(Null)
 	cv2.cvtColor(mat,gray,"COLOR_BGR2GRAY")
 	Log(cv2.threshold(gray,thresh,0,255,cv2.procEnum("THRESH_BINARY_INV")+cv2.procEnum("THRESH_OTSU")))
-	cv2.medianBlur(mat,mat,7)
-	cv2.imwrite(File.Combine(File.DirApp,"out.jpg"),mat)
-	cv2.imwrite(File.Combine(File.DirApp,"thresh.jpg"),thresh)
-	cv2.imwrite(File.Combine(File.DirApp,"gray.jpg"),gray)
+	'cv2.medianBlur(mat,mat,7)
+	cv2.rectangle(mat,cv2.rect(0,0,50,50),cv2.Scalar(255,0,0),2,3)
+	'cv2.imwrite(File.Combine(File.DirApp,"out.jpg"),mat)
+	'cv2.imwrite(File.Combine(File.DirApp,"thresh.jpg"),thresh)
+	'cv2.imwrite(File.Combine(File.DirApp,"gray.jpg"),gray)
 	Dim labels As cvMat
 	labels.Initialize(Null)
 	Dim stats As cvMat
@@ -52,6 +53,8 @@ Sub AppStart (Form1 As Form, Args() As String)
 	num=cv2.connectedComponentsWithStats(thresh,labels,stats,centroids,8,cv2.cvType("CV_32S"))
     Dim all As List
     all.Initialize
+	Dim sb As StringBuilder
+	sb.Initialize
 	For i = 0 To num-1
 		Dim rectangleInfo(5) As Int
 		stats.JO.RunMethodJO("get",Array(i,0,rectangleInfo))
@@ -59,6 +62,7 @@ Sub AppStart (Form1 As Form, Args() As String)
 		list1.Initialize
 		list1.AddAll(rectangleInfo)
         all.Add(list1)
+		sb.Append(rectangleInfo(0))
     Next
 End Sub
 

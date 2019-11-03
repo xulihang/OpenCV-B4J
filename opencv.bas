@@ -57,6 +57,22 @@ Public Sub cvType(typeStr As String) As Int
 	Return cvt.GetField(typeStr)
 End Sub
 
+Public Sub rectangle(img As cvMat, rec As Object, color As Object, thickness As Int, lineType As Int)
+	Imgproc.RunMethod("rectangle",Array(img.JO, rec,color,thickness, lineType))
+End Sub
+
+Public Sub rect(x As Int,y As Int,width As Int,height As Int) As JavaObject
+	Dim rec As JavaObject
+	rec.InitializeNewInstance("org.opencv.core.Rect",Array(x,y,width,height))
+	Return rec
+End Sub
+
+Public Sub Scalar(b As Double,g As Double,r As Double) As JavaObject
+	Dim sca As JavaObject
+	sca.InitializeNewInstance("org.opencv.core.Scalar",Array(b,g,r))
+	Return sca
+End Sub
+
 Sub matJO2mat(jo As JavaObject) As cvMat
 	Dim mat As cvMat
 	mat.Initialize(Null)
