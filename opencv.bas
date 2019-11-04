@@ -32,8 +32,8 @@ Public Sub threshold(src As cvMat,dst As cvMat,thresh As Double,maxVal As Double
 	Return Imgproc.RunMethod("threshold",Array(src.JO,dst.JO,thresh,maxVal,threshType))
 End Sub
 
-Public Sub connectedComponentsWithStats(image As cvMat,labels As cvMat,stats As cvMat,centroids As cvMat,connectivity As Int, ltype As Int) As Int
-	Return Imgproc.RunMethod("connectedComponentsWithStats",Array(image.JO,labels.JO,stats.JO,centroids.JO,connectivity,ltype))
+Public Sub connectedComponentsWithStats(image As cvMat,labels As cvMat,stats As cvMat,centroids As cvMat) As Int
+	Return Imgproc.RunMethod("connectedComponentsWithStats",Array(image.JO,labels.JO,stats.JO,centroids.JO))
 End Sub
 
 Public Sub cvtColor(src As cvMat,dst As cvMat,mode As Object)
@@ -71,6 +71,10 @@ Public Sub Scalar(b As Double,g As Double,r As Double) As JavaObject
 	Dim sca As JavaObject
 	sca.InitializeNewInstance("org.opencv.core.Scalar",Array(b,g,r))
 	Return sca
+End Sub
+
+Public Sub imencode(fileExtension As String,MatJO As JavaObject,MatOfByte As JavaObject)
+	Imgcodecs.RunMethod("imencode",Array(fileExtension, MatJO, MatOfByte))
 End Sub
 
 Sub matJO2mat(jo As JavaObject) As cvMat

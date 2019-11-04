@@ -35,6 +35,23 @@ Sub matJO2mat(jo As JavaObject) As cvMat
 	Return mat
 End Sub
 
+Sub mat2bytes As Byte()
+	Dim matOfByte As JavaObject
+	matOfByte.InitializeNewInstance("org.opencv.core.MatOfByte",Null)
+	'Dim bytes(Cols*Rows*Channels) As Byte
+	'matJO.RunMethod("get",Array(0,0,bytes))
+	Dim cv As opencv
+	cv.Initialize
+	cv.imencode(".jpg", matJO, matOfByte)
+	Dim bytes() As Byte
+	bytes=matOfByte.RunMethod("toArray",Null)
+	Return bytes
+End Sub
+
+Sub Channels As Int
+	Return matJO.RunMethod("channels",Null)
+End Sub
+
 Sub Size As JavaObject
 	Return matJO.RunMethodJO("size",Null)
 End Sub
